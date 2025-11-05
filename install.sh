@@ -31,8 +31,8 @@ function check_existing_extensions() {
 }
 
 function check_existing_kinematics() {
-    for extension in ${EXTENSION_LIST}; do
-        [ -L "${KLIPPER_PATH}/klippy/extras/${extension}.py" ] || return 1
+    for kinematic in ${KINEMATICS_LIST}; do
+        [ -L "${KLIPPER_PATH}/klippy/kinematics/${kinematic}.py" ] || return 1
     done
     return 0
 }
@@ -53,14 +53,14 @@ function unlink_extensions() {
 }
 
 function link_kinematics() {
-    echo "Linking kinematicss to Klipper..."
+    echo "Linking kinematics to Klipper..."
     for kinematics in ${KINEMATICS_LIST}; do
         ln -sf "${SRCDIR}/kinematics/${kinematics}/${kinematics}.py" "${KLIPPER_PATH}/klippy/kinematics/${kinematics}.py"
     done
 }
 
 function unlink_kinematics() {
-    echo "Unlinking kinematicss from Klipper..."
+    echo "Unlinking kinematics from Klipper..."
     for kinematics in ${KINEMATICS_LIST}; do
         rm -f "${KLIPPER_PATH}/klippy/kinematics/${kinematics}.py"
     done
@@ -101,6 +101,6 @@ verify_ready
             link_kinematics
         fi
     fi
-fi
+
 restart_klipper
 exit 0
